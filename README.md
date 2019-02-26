@@ -1,5 +1,7 @@
 # MicCheck
 
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/flevenson/MicCheck.svg?columns=all)](https://waffle.io/flevenson/MicCheck)
+
 A React/Node.js mobile-first app created to assist in signing up for a comedy open-mic and to assist the host with the lineup.
 
 # Goals
