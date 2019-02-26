@@ -1,8 +1,10 @@
 # MicCheck
-## A React/Node.js mobile-first app created to assist in signing up for a comedy open-mic and to assist the host with the lineup.
+
+A React/Node.js mobile-first app created to assist in signing up for a comedy open-mic and to assist the host with the lineup.
 
 # Goals
-## To remove the need for a sign up sheet at an open mic, and allow for everything to be made digital
+
+To remove the need for a sign up sheet at an open mic, and allow for everything to be made digital
 
 
 ## Setup Instructions 
