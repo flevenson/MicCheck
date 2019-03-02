@@ -14,4 +14,27 @@ app.get('/api/v1/open_mic_performers', (request, response) => {
         .then(performers => {
             response.status(200).json(performers)
         })
+        .catch((error) => {
+            response.status(500).json({error})
+        })
 })
+
+app.post('/api/v1/open_mic_performers', (request, response) =>{
+    const performer = request.body;
+
+    for (let requiredParameter of ['name']) {
+        if(!performer[requiredParameter]) {
+            return response.status(422).send({
+                error: `Expected format: { name: <STRING> } missing ${requiredParameter}`
+            })
+        }
+    }
+    database('performers').insert(performer, 'id')
+        .then(performer => {
+            response.status(201).json({id: performer[0]})
+        })
+        .catch(error => {
+            response.status(500).json({ error })
+        })
+})
+
