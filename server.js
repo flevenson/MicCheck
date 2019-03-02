@@ -19,7 +19,7 @@ app.get('/api/v1/open_mic_performers', (request, response) => {
         })
 })
 
-app.post('/api/v1/open_mic_performers', (request, response) =>{
+app.post('/api/v1/open_mic_performers', (request, response) => {
     const performer = request.body;
 
     for (let requiredParameter of ['name']) {
@@ -35,6 +35,25 @@ app.post('/api/v1/open_mic_performers', (request, response) =>{
         })
         .catch(error => {
             response.status(500).json({ error })
+        })
+})
+
+app.delete('/api/v1/open_mic_performers/:name', (request, response) => {
+    let { name } = request.params;
+    name = name.replace(/\+/g, " ");
+
+    database('performers')
+        .where('name', name)
+        .del()
+        .then(performer => {
+            if(performer === 0){
+                response.status(404).json(`No performer '${name}' found in database`);
+            } else {
+                response.status(202).json(`Performer '${name}' successfully removed`);
+            }
+        })
+        .catch(error => {
+            response.status(500).json({ error: error.message})
         })
 })
 
