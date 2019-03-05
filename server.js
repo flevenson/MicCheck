@@ -60,7 +60,13 @@ app.delete('/api/v1/open_mic_performers/:name', (request, response) => {
 app.delete('/api/v1/open_mic_performers', (request, response) => {
 
     database('signups')
-    
+        .truncate()
+        .then(signups => {
+            response.status(202).json('Database successfully cleared');
+        })
+        .catch(error => {
+            response.status(500).json({ error: error.message})
+        })
 })
 
 app.listen(app.get('port'), () => {
