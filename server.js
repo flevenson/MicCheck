@@ -9,10 +9,10 @@ app.use(bodyParser.json())
 app.set('port', process.env.PORT || 3000);
 
 app.get('/api/v1/open_mic_performers', (request, response) => {
-    database('performers')
+    database('signups')
         .select()
-        .then(performers => {
-            response.status(200).json(performers)
+        .then(signups => {
+            response.status(200).json(signups)
         })
         .catch((error) => {
             response.status(500).json({error})
@@ -20,18 +20,18 @@ app.get('/api/v1/open_mic_performers', (request, response) => {
 })
 
 app.post('/api/v1/open_mic_performers', (request, response) => {
-    const performer = request.body;
+    const signup = request.body;
 
     for (let requiredParameter of ['name']) {
-        if(!performer[requiredParameter]) {
+        if(!signup[requiredParameter]) {
             return response.status(422).send({
                 error: `Expected format: { name: <STRING> } missing ${requiredParameter}`
             })
         }
     }
-    database('performers').insert(performer, 'id')
-        .then(performer => {
-            response.status(201).json({id: performer[0]})
+    database('signups').insert(performer, 'id')
+        .then(signup => {
+            response.status(201).json({id: signup[0]})
         })
         .catch(error => {
             response.status(500).json({ error })
@@ -42,19 +42,25 @@ app.delete('/api/v1/open_mic_performers/:name', (request, response) => {
     let { name } = request.params;
     name = name.replace(/\+/g, " ");
 
-    database('performers')
+    database('signups')
         .where('name', name)
         .del()
-        .then(performer => {
-            if(performer === 0){
-                response.status(404).json(`No performer '${name}' found in database`);
+        .then(signup => {
+            if(signup === 0){
+                response.status(404).json(`No signup '${name}' found in database`);
             } else {
-                response.status(202).json(`Performer '${name}' successfully removed`);
+                response.status(202).json(`Signup '${name}' successfully removed`);
             }
         })
         .catch(error => {
             response.status(500).json({ error: error.message})
         })
+})
+
+app.delete('/api/v1/open_mic_performers', (request, response) => {
+
+    database('signups')
+    
 })
 
 app.listen(app.get('port'), () => {
