@@ -72,3 +72,5 @@ app.delete('/api/v1/open_mic_performers', (request, response) => {
 app.listen(app.get('port'), () => {
     console.log(`MicCheck is running on ${app.get('port')}`)
 })
+
+module.exports = app;

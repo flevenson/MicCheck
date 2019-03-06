@@ -41,7 +41,7 @@ describe('Server file', () => {
         it('get request should have a 200 status', done => {
             chai
                 .request(app)
-                .get('/api/v1/performers')
+                .get('/api/v1/open_mic_performers')
                 .end((error, response) => {
                     expect(response).to.have.status(200);
                     done();
