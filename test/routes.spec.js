@@ -68,6 +68,20 @@ describe('Server file', () => {
                 })
         })
 
+        it('get request should return an array with all performers', done => {
+            chai
+                .request(app)
+                .get('/api/v1/open_mic_performers')
+                .end((error, response) => {
+                    expect(response.body).to.be.a('array');
+                    expect(response.body.length).to.equal(3);
+                    let performerNames = response.body.map(performer => performer.name);
+                    expect(performerNames.includes('Christie Buchele')).to.equal(true);
+                    expect(performerNames.includes('Janae Burris')).to.equal(true);
+                    expect(performerNames.includes('Rachel Weeks')).to.equal(true);
+                    done();
+                })
+        })
 
     })
 })
