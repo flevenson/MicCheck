@@ -58,6 +58,16 @@ describe('Server file', () => {
                 });
         });
 
+        it('get request should return data as JSON', done => {
+            chai
+                .request(app)
+                .get('/api/v1/open_mic_performers')
+                .end((error, response) => {
+                    expect(response).to.be.json;
+                    done();
+                })
+        })
+
 
     })
 })
