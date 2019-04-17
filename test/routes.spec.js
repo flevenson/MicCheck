@@ -37,6 +37,16 @@ describe('Server file', () => {
             .then(() => done());
     })
 
+    it('should return a 404 for a route that does not exist', done => {
+        chai
+            .request(app)
+            .get('/fakeroute')
+            .end((error, response) => {
+                expect(response).to.have.status(404);
+                done();
+            })
+    })
+
     describe('/api/v1/performers', () => {
         it('get request should have a 200 status', done => {
             chai
@@ -48,6 +58,30 @@ describe('Server file', () => {
                 });
         });
 
+        it('get request should return data as JSON', done => {
+            chai
+                .request(app)
+                .get('/api/v1/open_mic_performers')
+                .end((error, response) => {
+                    expect(response).to.be.json;
+                    done();
+                })
+        })
+
+        it('get request should return an array with all performers', done => {
+            chai
+                .request(app)
+                .get('/api/v1/open_mic_performers')
+                .end((error, response) => {
+                    expect(response.body).to.be.a('array');
+                    expect(response.body.length).to.equal(3);
+                    let performerNames = response.body.map(performer => performer.name);
+                    expect(performerNames.includes('Christie Buchele')).to.equal(true);
+                    expect(performerNames.includes('Janae Burris')).to.equal(true);
+                    expect(performerNames.includes('Rachel Weeks')).to.equal(true);
+                    done();
+                })
+        })
 
     })
 })
