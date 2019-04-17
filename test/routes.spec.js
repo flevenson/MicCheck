@@ -37,6 +37,16 @@ describe('Server file', () => {
             .then(() => done());
     })
 
+    it('should return a 404 for a route that does not exist', done => {
+        chai
+            .request(app)
+            .get('/fakeroute')
+            .end((error, response) => {
+                expect(response).to.have.status(404);
+                done();
+            })
+    })
+
     describe('/api/v1/performers', () => {
         it('get request should have a 200 status', done => {
             chai
