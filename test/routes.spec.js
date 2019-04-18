@@ -10,17 +10,6 @@ const database = require('knex')(config);
 chai.use(chaiHttp);
 
 describe('Server file', () => {
-    before(done => {
-        database.migrate
-            .rollback()
-            .then(() => database.migrate.latest())
-            .then(() => database.seed.run())
-            .then(() => done())
-            .catch(error => {
-                throw error;
-            })
-            .done();
-    })
 
     beforeEach(done => {
         database.migrate
@@ -35,7 +24,7 @@ describe('Server file', () => {
             .rollback()
             .then(() => console.log('Testing complete. Db rolled back'))
             .then(() => done());
-    })
+    });
 
     it('should return a 404 for a route that does not exist', done => {
         chai
@@ -66,7 +55,7 @@ describe('Server file', () => {
                     expect(response).to.be.json;
                     done();
                 })
-        })
+        });
 
         it('get request should return an array with all performers', done => {
             chai
