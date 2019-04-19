@@ -29,9 +29,10 @@ app.post('/api/v1/open_mic_performers', (request, response) => {
             })
         }
     }
-    database('signups').insert(performer, 'id')
+    database('signups')
+        .insert(signup, 'id')
         .then(signup => {
-            response.status(201).json({id: signup[0]})
+            response.status(201).json('Performer Successfully Added')
         })
         .catch(error => {
             response.status(500).json({ error })

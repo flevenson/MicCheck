@@ -11,6 +11,18 @@ chai.use(chaiHttp);
 
 describe('Server file', () => {
 
+    // before(done => {
+    //     database.migrate
+    //       .rollback()
+    //       .then(() => database.migrate.latest())
+    //       .then(() => database.seed.run())
+    //       .then(() => done())
+    //       .catch(error => {
+    //         throw error;
+    //       })
+    //       .done();
+    //   });
+
     beforeEach(done => {
         database.migrate
             .rollback()
@@ -22,6 +34,7 @@ describe('Server file', () => {
     after(done => {
         database.migrate
             .rollback()
+            .then(() => database.migrate.latest())
             .then(() => console.log('Testing complete. Db rolled back'))
             .then(() => done());
     });
@@ -72,5 +85,21 @@ describe('Server file', () => {
                 })
         })
 
+        it('post request should correctly add a new performer', done => {
+            const newPerformer = {
+                name: 'Ben Kronberg'
+            }
+
+            chai
+                .request(app)
+                .post('/api/v1/open_mic_performers')
+                .send(newPerformer)
+                .end((error, response) => {
+                    expect(response).to.have.status(201);
+                    expect(response.body).to.equal('Performer Successfully Added')
+                    done()
+                })
+        })
     })
+    process.removeAllListeners()
 })
