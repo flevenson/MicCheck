@@ -100,6 +100,22 @@ describe('Server file', () => {
                     done()
                 })
         })
+
+        it('post request should return error message if missing name', done => {
+            const newPerformer = {
+
+            }
+
+            chai
+                .request(app)
+                .post('/api/v1/open_mic_performers')
+                .send(newPerformer)
+                .end((error, response) => {
+                    expect(response).to.have.status(422);
+                    expect(response.error.text).to.equal(`{"error":"Expected format: { name: <STRING> } missing name"}`)
+                    done()
+                })
+        })
     })
     process.removeAllListeners()
 })
