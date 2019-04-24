@@ -127,6 +127,17 @@ describe('Server file', () => {
                     done()
                 })
         })
+
+        it('delete request should return error message if performer does not exist', done => {
+            chai
+                .request(app)
+                .delete('/api/v1/open_mic_performers/Bob+Bobertson')
+                .end((error, response) => {
+                    expect(response).to.have.status(404)
+                    expect(response.error.text).to.equal(`"No signup 'Bob Bobertson' found in database"`)
+                    done()
+                })
+        })
     })
     process.removeAllListeners()
 })
