@@ -116,6 +116,17 @@ describe('Server file', () => {
                     done()
                 })
         })
+
+        it('delete request should correctly delete user', done => {
+            chai
+                .request(app)
+                .delete(`/api/v1/open_mic_performers/Christie+Buchele`)
+                .end((error, response) => {
+                    expect(response).to.have.status(202)
+                    expect(response.body).to.equal("Signup 'Christie Buchele' successfully removed")
+                    done()
+                })
+        })
     })
     process.removeAllListeners()
 })
