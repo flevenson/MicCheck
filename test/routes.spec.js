@@ -138,6 +138,17 @@ describe('Server file', () => {
                     done()
                 })
         })
+
+        it('delete request without name should clear DB', done => {
+            chai
+                .request(app)
+                .delete('/api/v1/open_mic_performers')
+                .end((error, response) => {
+                    expect(response).to.have.status(202)
+                    expect(response.body).to.equal("Database successfully cleared")
+                    done()
+                })
+        })
     })
     process.removeAllListeners()
 })
